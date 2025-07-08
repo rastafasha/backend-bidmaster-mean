@@ -18,10 +18,10 @@ const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/validar-campos');
 
 
-router.get('/projects',  validarJWT, getProjects);
-router.get('/projects/user/:id',  validarJWT, getProjectsByUser);
+router.get('/',  validarJWT, getProjects);
+router.get('/user/:id',  validarJWT, getProjectsByUser);
 router.get('/project/:id',  validarJWT, getProject);
-router.post('/projects/store',  
+router.post('/store',  
     validarJWT, 
      createProject 
     );

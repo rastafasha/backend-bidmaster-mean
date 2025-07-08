@@ -7,7 +7,11 @@ const Project = require('../models/project');
         //traemos las tareas en orden de ultima fecha
         projects.sort((a,b) => b.createdAt - a.createdAt);
         
-        res.json(projects);
+       
+        res.json({
+            ok: true,
+            projects
+        });
     } catch (error) {
         return res.status(500).json({message: 'Error al obtener proyectos'});
     }
