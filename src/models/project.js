@@ -27,7 +27,7 @@ const projectSchema = new mongoose.Schema({
     //     required:true
     // },
     type: { type: String, require: false },
-    hasPresentation: { type: String, require: false },
+    hasPresentation: { type: String, require: false, default:false },
     deliveryDate: { type: String, require: false },
 }, {
     timestamps:true

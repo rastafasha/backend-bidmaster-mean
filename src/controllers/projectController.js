@@ -5,7 +5,7 @@ const Project = require('../models/project');
     try {
         const projects = await Project.find()
         .sort({ createdAt: -1 })
-
+        // .populate('ProjectType');
         //traemos las tareas en orden de ultima fecha
         projects.sort((a,b) => b.createdAt - a.createdAt);
         
@@ -32,21 +32,44 @@ const Project = require('../models/project');
     }
 };
  const createProject = async (req, res) =>{
-    try {
-        const {name, type, deliveryDate, hasPresentation, url} = req.body;
-        const newProject = new Project({
-            name, 
-            type, 
-            deliveryDate,
-            hasPresentation,
-            url: req.body.url || '',
-            user: req.user.id
+    // try {
+    //     const {name, type, deliveryDate, hasPresentation, url} = req.body;
+    //     const newProject = new Project({
+    //         name, 
+    //         type, 
+    //         deliveryDate,
+    //         hasPresentation,
+    //         url: req.body.url || '',
+    //         user: req.user.id
+    //     });
+    //     const saveProject =  await newProject.save();
+    //     res.json(saveProject);
+    // } catch (error) {
+    //     return res.status(400).json({message: error.message});
+    // }
+    const uid = req.uid;
+        const project = new Project({
+            usuario: uid,
+            ...req.body
         });
-        const saveProject =  await newProject.save();
-        res.json(saveProject);
-    } catch (error) {
-        return res.status(400).json({message: error.message});
-    }
+    
+        try {
+    
+            const projectDB = await project.save();
+    
+            res.json({
+                ok: true,
+                project: projectDB
+            });
+    
+        } catch (error) {
+            // console.log(error);
+            res.status(500).json({
+                ok: false,
+                msg: 'Hable con el admin'
+            });
+        }
+    
 
 };
  const getProject = async (req, res) =>{
