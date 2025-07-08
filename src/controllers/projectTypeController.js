@@ -5,9 +5,14 @@ const ProjectType = require('../models/projecttype');
  const getProjectTypes = async (req, res) =>{
     try {
         const projecttypes = await ProjectType.find()
+        
         //traemos las tareas en orden de ultima fecha
         projecttypes.sort((a,b) => b.createdAt - a.createdAt);
-        res.json(projecttypes);
+
+        res.json({
+        ok: true,
+        projecttypes
+    });
     } catch (error) {
         return res.status(500).json({message: 'Error al obtener tipos de proyectos'});
     }
@@ -30,7 +35,11 @@ const ProjectType = require('../models/projecttype');
   try {
      const projecttype = await ProjectType.findById(req.params.id)
    if(!projecttype) return res.status(404).json({msg: 'projecttype not found'})
-    res.json(projecttype);
+    // res.json(projecttype);
+ res.json({
+        ok: true,
+        projecttype
+    });
 
   } catch (error) {
     return res.status(404).json({msg: 'projecttype not found'})
@@ -49,7 +58,11 @@ const ProjectType = require('../models/projecttype');
     try {
         const projecttype = await ProjectType.findByIdAndUpdate(req.params.id, req.body, {new: true})
         if(!projecttype) return res.status(404).json({msg: 'projecttype not found'})
-        res.json(projecttype);
+        // res.json(projecttype);
+    res.json({
+        ok: true,
+        projecttype
+    });
     } catch (error) {
         return res.status(404).json({msg: 'projecttype not found'})
     }

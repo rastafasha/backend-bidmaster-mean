@@ -5,7 +5,10 @@ export const getTasks = async (req, res) =>{
         const tasks = await Task.find()
         //traemos las tareas en orden de ultima fecha
         tasks.sort((a,b) => b.createdAt - a.createdAt);
-        res.json(tasks);
+        res.json({
+            ok: true,
+            tasks
+        });
     } catch (error) {
         return res.status(500).json({message: 'Error al obtener tareas'})
     }
@@ -15,7 +18,10 @@ export const getTasksByUser = async (req, res) =>{
         const tasks = await Task.find({
         user: req.params.id
         }).populate('user')
-        res.json(tasks);
+        res.json({
+            ok: true,
+            tasks
+        });
     } catch (error) {
         return res.status(404).json({ message: 'No tasks found' });
     }
@@ -40,7 +46,10 @@ export const getTask = async (req, res) =>{
   try {
      const task = await Task.findById(req.params.id)
    if(!task) return res.status(404).json({msg: 'Task not found'})
-    res.json(task);
+    res.json({
+            ok: true,
+            task
+        });
 
   } catch (error) {
     return res.status(404).json({msg: 'Task not found'})
@@ -59,7 +68,10 @@ export const updateTask = async (req, res) =>{
     try {
         const task = await Task.findByIdAndUpdate(req.params.id, req.body, {new: true})
         if(!task) return res.status(404).json({msg: 'Task not found'})
-        res.json(task);
+        res.json({
+            ok: true,
+            task
+        });
     } catch (error) {
         return res.status(404).json({msg: 'Task not found'})
     }

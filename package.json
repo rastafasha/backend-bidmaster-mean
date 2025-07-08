@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
         "start:dev": "nodemon index.js",
+        "seeder": "node src/seeders/partnerSeeder.js",
         "start": "node index.js"
     },
     "keywords": [],

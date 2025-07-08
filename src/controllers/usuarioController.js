@@ -185,9 +185,7 @@ const getAllUsers = async(req, res) => {
     //     usuarios
     // });
     const usuarios = await Usuario.find({})
-        .populate('pago')
-        .populate('blog')
-        .populate('subcription')
+        .populate('project')
         .populate('profile');
 
     res.json({
@@ -393,7 +391,7 @@ const crearEditor = async(req, res = response) => {
         const usuario = new Usuario({
             username: body.username,
             email: body.email,
-            role: 'EDITOR',
+            role: 'PARTNER',
         });
 
         //encriptar password
@@ -426,7 +424,7 @@ const crearEditor = async(req, res = response) => {
 const getAllEditores = (req, res) => {
 
 
-    Usuario.find({ role: 'EDITOR' }).exec((err, editores) => {
+    Usuario.find({ role: 'PARTNER' }).exec((err, editores) => {
         if (err) {
             res.status(500).send({ message: 'Ocurrió un error en el servidor.' });
         } else {
@@ -557,23 +555,6 @@ const listarProfileUsuario = (req, res) => {
 
 
 
-const cambiarAMiembro = async(req, res = response) => {
-    var id = req.params['id'];
-    // console.log(id);
-    Usuario.findByIdAndUpdate({ _id: id }, { role: 'MEMBER' }, (err, usuario_data) => {
-        if (err) {
-            res.status(500).send({ message: err });
-        } else {
-            if (usuario_data) {
-                res.status(200).send({ usuario: usuario_data });
-            } else {
-                res.status(403).send({ message: 'No se actualizó el usuario, vuelva a intentar nuevamente.' });
-            }
-        }
-    })
-};
-
-
 module.exports = {
     getUsuariosList,
     crearUsuarios,
@@ -589,5 +570,4 @@ module.exports = {
     newest,
     getAllEditores,
     listarProfileUsuario,
-    cambiarAMiembro
 };

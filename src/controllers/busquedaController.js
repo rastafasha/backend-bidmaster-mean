@@ -1,6 +1,7 @@
 const { response } = require('express');
-const Categoria = require('../models/categoria');
+const ProjectType = require('../models/projecttype');
 const Usuario = require('../models/usuario');
+const Project = require('../models/project');
 
 const getTodo = async(req, res = response) => {
 
@@ -8,15 +9,17 @@ const getTodo = async(req, res = response) => {
     const regex = new RegExp(busqueda, 'i');
 
 
-    const [usuarios,categorias,] = await Promise.all([
+    const [usuarios,projecttypes,projects] = await Promise.all([
         Usuario.find({ username: regex}),
-        Categoria.find({ nombre: regex }),
+        ProjectType.find({ name: regex }),
+        Project.find({ name: regex }),
     ]);
 
     res.json({
         ok: true,
         usuarios,
-        categorias,
+        projecttypes,
+        projects
 
     })
 }
@@ -33,13 +36,16 @@ const getDocumentosColeccion = async(req, res = response) => {
         case 'usuarios':
             data = await Usuario.find({ username: regex });
             break;
-        case 'categorias':
-            data = await Categoria.find({ nombre: regex });
+        case 'projecttypes':
+            data = await ProjectType.find({ name: regex });
             break;
-        case 'pagos':
-            data = await Pago.find({ referencia: regex })
-                .populate('referencia', 'monto img');
+        case 'projects':
+            data = await Project.find({ name: regex });
             break;
+        // case 'pagos':
+        //     data = await Pago.find({ referencia: regex })
+        //         .populate('referencia', 'monto img');
+        //     break;
         // case 'subcriptions':
         //     data = await Subcriptionpaypal.find({ orderID: regex })
         //         .populate('orderID', 'orderID payerID plan_id status usuarios createdAt updatedAt');
@@ -47,7 +53,7 @@ const getDocumentosColeccion = async(req, res = response) => {
         default:
             return res.status(400).json({
                 ok: false,
-                msg: 'la tabla debe ser usuarios/categorias/'
+                msg: 'la tabla debe ser usuarios/projecttypes/projects'
             });
     }
 
@@ -56,15 +62,17 @@ const getDocumentosColeccion = async(req, res = response) => {
         resultados: data
     });
 
-    const [usuarios, blogs, categorias, pagos, subcriptions] = await Promise.all([
+    const [usuarios, projecttypes,  projects] = await Promise.all([
         Usuario.find({ username: regex }),
-        Categoria.find({ nombre: regex }),
+        ProjectType.find({ name: regex }),
+        Project.find({ name: regex }),
     ]);
 
     res.json({
         ok: true,
         usuarios,
-        categorias,
+        projects,
+        projecttypes,
 
     })
 }

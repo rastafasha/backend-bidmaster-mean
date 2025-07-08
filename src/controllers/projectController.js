@@ -4,6 +4,8 @@ const Project = require('../models/project');
  const getProjects = async (req, res) =>{
     try {
         const projects = await Project.find()
+        .sort({ createdAt: -1 })
+
         //traemos las tareas en orden de ultima fecha
         projects.sort((a,b) => b.createdAt - a.createdAt);
         
@@ -21,7 +23,10 @@ const Project = require('../models/project');
         const projects = await Project.find({
         user: req.params.id
         }).populate('user')
-        res.json(projects);
+        res.json({
+            ok: true,
+            projects
+        });
     } catch (error) {
         return res.status(404).json({ message: 'No projects found' });
     }
@@ -49,7 +54,10 @@ const Project = require('../models/project');
      const project = await Project.findById(req.params.id)
         
    if(!project) return res.status(404).json({msg: 'project not found'})
-    res.json(project);
+    res.json({
+            ok: true,
+            project
+        });
 
   } catch (error) {
     return res.status(404).json({msg: 'project not found'})
@@ -68,7 +76,10 @@ const Project = require('../models/project');
     try {
         const project = await Project.findByIdAndUpdate(req.params.id, req.body, {new: true})
         if(!project) return res.status(404).json({msg: 'Project not found'})
-        res.json(project);
+        res.json({
+            ok: true,
+            project
+        });
     } catch (error) {
         return res.status(404).json({msg: 'project not found'})
     }

@@ -11,7 +11,7 @@ const {
     updateProject,
     deleteProject,
     getProjectsByUser
-} = require('../controllers/project.controller.js');
+} = require('../controllers/projectController.js');
 
 const { validarJWT } = require('../middlewares/validar-jwt');
 const { check } = require('express-validator');
@@ -25,8 +25,8 @@ router.post('/store',
     validarJWT, 
      createProject 
     );
-router.delete('/projects/delete/:id',  validarJWT, deleteProject);
-router.put('/projects/update/:id',  validarJWT, updateProject);
+router.delete('/delete/:id',  validarJWT, deleteProject);
+router.put('/update/:id',  validarJWT, updateProject);
 
 
 module.exports = router;
