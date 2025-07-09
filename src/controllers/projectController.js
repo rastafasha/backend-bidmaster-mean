@@ -19,10 +19,11 @@ const Project = require('../models/project');
     }
 };
  const getProjectsByUser = async (req, res) =>{
+     const uid = req.uid;
     try {
         const projects = await Project.find({
-        user: req.params.id
-        }).populate('user')
+            partners: req.params.id
+        });
         res.json({
             ok: true,
             projects
