@@ -21,13 +21,19 @@ const projectSchema = new mongoose.Schema({
         required:false,
         
     },
+    status:{
+        type:Boolean,
+        required:false,
+        default:false
+        
+    },
     // user:{
     //     type:mongoose.Schema.Types.ObjectId,
     //     ref:"User",
     //     required:true
     // },
     type: { type: String, require: false },
-    hasPresentation: { type: String, require: false, default:false },
+    hasPresentation: { type:Boolean, require: false, default:false },
     deliveryDate: { type: String, require: false },
 }, {
     timestamps:true

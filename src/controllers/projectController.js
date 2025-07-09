@@ -108,6 +108,22 @@ const Project = require('../models/project');
     }
 };
 
+function updateStatus(req, res) {
+    var id = req.params['id'];
+    // console.log(id);
+    Project.findByIdAndUpdate({ _id: id }, { status: true }, (err, project_data) => {
+        if (err) {
+            res.status(500).send({ message: err });
+        } else {
+            if (project_data) {
+                res.status(200).send({ project: project_data });
+            } else {
+                res.status(403).send({ message: 'No se actualizó el project, vuelva a intentar nuevamente.' });
+            }
+        }
+    })
+}
+
 module.exports = {
     getProjects,
 getProjectsByUser,
@@ -115,6 +131,7 @@ createProject,
 getProject,
 deleteProject,
 updateProject,
+updateStatus,
 
 
 };

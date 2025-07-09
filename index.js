@@ -65,7 +65,7 @@ app.use('/api/uploads', require('./src/routes/uploads'));
 app.use('/api/todo', require('./src/routes/busquedas'));
 app.use('/api/contactos', require('./src/routes/contacto'));
 app.use('/api/projects', require('./src/routes/project'));
-app.use('/api/projecttype', require('./src/routes/projecttype'));
+app.use('/api/projecttypes', require('./src/routes/projecttype'));
 
 
 //rutas

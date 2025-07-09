@@ -10,7 +10,8 @@ const {
     getProjects,
     updateProject,
     deleteProject,
-    getProjectsByUser
+    getProjectsByUser,
+    updateStatus
 } = require('../controllers/projectController.js');
 
 const { validarJWT } = require('../middlewares/validar-jwt');
@@ -27,6 +28,7 @@ router.post('/store',
     );
 router.delete('/delete/:id',  validarJWT, deleteProject);
 router.put('/update/:id',  validarJWT, updateProject);
+router.put('/updatestatus/:id',  validarJWT, updateStatus);
 
 
 module.exports = router;
