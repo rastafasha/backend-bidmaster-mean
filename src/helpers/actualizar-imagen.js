@@ -1,6 +1,7 @@
 
 const fs = require('fs');
 const Profile = require('../models/profile');
+const project = require('../models/project');
 
 const borrarImagen = (path) => {
 
@@ -15,12 +16,13 @@ const actualizarImagen = async(tipo, id, nombreArchivo, extensionArchivo) => {
     try {
         const mapTipo = {
             'profiles': await Profile.findById(id),
+            'projects': await project.findById(id),
         }
         const resultadoColeccion = mapTipo[tipo];
         if (resultadoColeccion.length == 0) {
             return false;
         }
-        
+         
         const path = `../../uploads/${tipo}/${resultadoColeccion.img}`
         if (fs.existsSync(path)) {
             //borrar la imagen si existe

@@ -17,9 +17,7 @@ const fileUpload = async (req, res = response) => {
     const id = req.params.id;
 
     const tiposValidos = [
-        'profiles', 'blogs', 'pagos', 
-        'banners', 'binancepays', 
-        'sideadvertisings'];
+        'profiles', 'projects', ];
 
     if (!tiposValidos.includes(tipo)) {
         return res.status(400).json({
@@ -42,7 +40,7 @@ const fileUpload = async (req, res = response) => {
     const extensionArchivo = nombreCortado[nombreCortado.length - 1];
 
     //validar extension
-    const extensionesValidas = ['png', 'jpg', 'jpeg', 'gif'];
+    const extensionesValidas = ['png', 'jpg', 'jpeg', 'gif', 'pdf'];
     if (!extensionesValidas.includes(extensionArchivo)) {
         return res.status(400).json({
             ok: false,

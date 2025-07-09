@@ -23,6 +23,7 @@ const fileUpload = async (req, res = response) => {
 
     const tiposValidos = [
         'profiles', 
+        'projects', 
     ];
 
     if (!tiposValidos.includes(tipo)) {
@@ -49,7 +50,7 @@ const fileUpload = async (req, res = response) => {
     const extensionArchivo = nombreCortado[nombreCortado.length - 1];
 
     //validar extension
-    const extensionesValidas = ['png', 'jpg', 'jpeg', 'gif'];
+    const extensionesValidas = ['png', 'jpg', 'jpeg', 'gif', 'pdf'];
     if (!extensionesValidas.includes(extensionArchivo)) {
         return res.status(400).json({
             ok: false,

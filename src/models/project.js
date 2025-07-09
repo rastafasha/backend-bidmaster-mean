@@ -32,6 +32,7 @@ const projectSchema = new mongoose.Schema({
     //     ref:"User",
     //     required:true
     // },
+    img: { type: String, required: false },
     type: { type: String, require: false },
     hasPresentation: { type:Boolean, require: false, default:false },
     deliveryDate: { type: String, require: false },
