@@ -6,13 +6,19 @@ const Project = require('../models/project');
 const getTodo = async(req, res = response) => {
 
     const busqueda = req.params.busqueda;
+    const typeFilter = req.query.type || null;
     const regex = new RegExp(busqueda, 'i');
 
+    // Build project query filter
+    let projectFilter = { name: regex };
+    if (typeFilter) {
+        projectFilter.type = typeFilter;
+    }
 
-    const [usuarios,projecttypes,projects] = await Promise.all([
-        Usuario.find({ username: regex}),
+    const [usuarios, projecttypes, projects] = await Promise.all([
+        Usuario.find({ username: regex }),
         ProjectType.find({ name: regex }),
-        Project.find({ name: regex }),
+        Project.find(projectFilter),
     ]);
 
     res.json({
@@ -20,8 +26,7 @@ const getTodo = async(req, res = response) => {
         usuarios,
         projecttypes,
         projects
-
-    })
+    });
 }
 
 const getDocumentosColeccion = async(req, res = response) => {
@@ -40,7 +45,7 @@ const getDocumentosColeccion = async(req, res = response) => {
             data = await ProjectType.find({ name: regex });
             break;
         case 'projects':
-            data = await Project.find({ name: regex });
+            data = await Project.find({ name: regex, type:regex });
             break;
         // case 'pagos':
         //     data = await Pago.find({ referencia: regex })
@@ -65,7 +70,7 @@ const getDocumentosColeccion = async(req, res = response) => {
     const [usuarios, projecttypes,  projects] = await Promise.all([
         Usuario.find({ username: regex }),
         ProjectType.find({ name: regex }),
-        Project.find({ name: regex }),
+        Project.find({ name: regex, type:regex }),
     ]);
 
     res.json({
