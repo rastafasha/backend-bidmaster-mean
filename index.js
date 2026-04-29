@@ -29,7 +29,7 @@ const server = require('http').Server(app);
 const allowedOrigins = [
   "http://localhost:4207",
   "http://localhost:4203",
-  "https://appbidmaster.vercel.app",
+  "https://admin-mean-bidmaster.vercel.app",
 ];
 
 // Configuración compartida
